@@ -59,5 +59,20 @@ export class Result<TData, TMessage = string> {
     public addError(message: TMessage): void {
         // Add message to errors
         this._errors.push(message);
+
+        // Set invalid state
+        this._state = ResultState.Invalid;
+    }
+
+    /**
+     * Add warning
+     * @param message 
+     */
+    public addWarning(message: TMessage): void {
+        // Add message to warnings
+        this._warnings.push(message);
+
+        // Update valid state with warnings
+        (this._state === ResultState.Valid) && (this._state = ResultState.ValidWithWarnings);
     }
 }
